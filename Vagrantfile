@@ -1,12 +1,12 @@
 $script = <<SCRIPT
 (
-rpm -i https://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm
-yum install -y -q autoconf automake btrfs-progs docker gettext-devel git libcgroup-tools libtool python-pip
+rpm -i https://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-11.noarch.rpm
+yum install -y autoconf automake btrfs-progs docker gettext-devel git libcgroup-tools libtool python-pip jq
 
 fallocate -l 10G ~/btrfs.img
-mkdir /var/bocker
+mkdir /var/gocker
 mkfs.btrfs ~/btrfs.img
-mount -o loop ~/btrfs.img /var/bocker
+mount -o loop ~/btrfs.img /var/gocker
 
 pip install git+https://github.com/larsks/undocker
 systemctl start docker.service
@@ -22,7 +22,10 @@ make
 mv unshare /usr/bin/unshare
 cd ..
 
-ln -s /vagrant/bocker /usr/bin/bocker
+curl -sL https://raw.githubusercontent.com/moby/moby/master/contrib/download-frozen-image-v2.sh -o /usr/bin/download-frozen-image-v2
+chmod +x /usr/bin/download-frozen-image-v2
+
+ln -s /vagrant/gocker /usr/bin/gocker
 
 echo 1 > /proc/sys/net/ipv4/ip_forward
 iptables --flush

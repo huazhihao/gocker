@@ -1,8 +1,31 @@
 # Gocker
 
-Docker implemented in around 100 lines of Go. Salute to [Bocker](https://github.com/p8952/bocker).
+A flyweight docker implemented in Go and inspired by [Bocker](https://github.com/p8952/bocker), using BTRFS subvolumes as union file system layers, cgroup as virtualization method and linux bridge as virtual networking.
 
-## License
+# How to use
+
+    $ GOOS=linux go build
+
+    $ vagrant up
+
+    $ vagrant ssh
+
+    $ gocker pull centos 7
+
+    $ gocker images
+    centos:7
+
+    $ gocker run centos 7 cat /etc/centos-release
+    CentOS Linux release 7.4.1708 (Core)
+
+    $ gocker ps
+    CONTAINER	COMMAND
+    42031	cat /etc/centos-release
+
+    $ gocker logs 42031
+    CentOS Linux release 7.4.1708 (Core)
+
+# License
 
 Copyright (C) 2017 Hua Zhihao
 
